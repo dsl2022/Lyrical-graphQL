@@ -7,24 +7,23 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 import App from './components/App';
 import SongCreate from './components/SongCreate';
 import SongDetail from './components/SongDetail';
-import './style/style.css'
-const client = new ApolloClient({})
+import './style/style.css';
+const client = new ApolloClient({
+	dataIdFromObject: (o) => o.id
+});
 
 const Root = () => {
-  return <ApolloProvider client={client}>
-    <Router history={hashHistory}>
-      <Route path="/" component={App}>
-        <IndexRoute component={SongList} />
-        </Route>
-        <Route  path="songs/new" component={SongCreate} />
-        <Route path="songs/:id" component={SongDetail} />
-       
-    </Router>
-      
-  </ApolloProvider>
+	return (
+		<ApolloProvider client={client}>
+			<Router history={hashHistory}>
+				<Route path="/" component={App}>
+					<IndexRoute component={SongList} />
+				</Route>
+				<Route path="songs/new" component={SongCreate} />
+				<Route path="songs/:id" component={SongDetail} />
+			</Router>
+		</ApolloProvider>
+	);
 };
 
-ReactDOM.render(
-  <Root />,
-  document.querySelector('#root')
-);
+ReactDOM.render(<Root />, document.querySelector('#root'));
